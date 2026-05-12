@@ -26,3 +26,14 @@ Pada eksperimen ini, arsitektur *event-driven* berhasil dijalankan menggunakan *
 1. Konsol **Subscriber** dijalankan lebih dulu dan berada dalam mode *listening*, bertindak sebagai *consumer* yang *standby* menunggu pesan masuk dari *message broker* AMQP.
 2. Konsol **Publisher** kemudian dieksekusi, di mana program ini berhasil mengirimkan (*dispatch*) 5 *event* (pesan) secara berurutan ke *message broker*.
 3. Seperti yang terlihat pada *screenshot*, sesaat setelah Publisher mengirimkan rentetan *event* tersebut, Subscriber langsung menangkap dan memproses pesan-pesannya secara *real-time*.
+
+### Monitoring Chart RabbitMQ (CloudAMQP)
+
+Berikut adalah *screenshot* dari *dashboard* monitoring CloudAMQP saat aktivitas pengiriman pesan berlangsung:
+
+![img_1.png](img_1.png)
+
+**Penjelasan terkait lonjakan (spikes) pada grafik:**
+Seperti yang terlihat pada grafik *monitoring* di atas, terdapat lonjakan (*spikes*) garis yang cukup tajam. Lonjakan ini terjadi persis pada saat saya menjalankan program `publisher` secara berulang-ulang dalam waktu yang berdekatan.
+
+Setiap kali `publisher` dieksekusi, program tersebut secara instan menembakkan 5 *event* (pesan) sekaligus ke dalam antrean (*queue*) di *message broker*. Karena pengiriman paket pesan ini terjadi dalam sepersekian milidetik yang sangat singkat, sistem mendeteksi adanya peningkatan drastis pada *message rate* (jumlah pesan yang masuk dan didistribusikan per detik). Peningkatan aktivitas lalu lintas pesan (*traffic I/O*) yang tiba-tiba inilah yang secara visual terekam dan digambarkan sebagai *spike* (lonjakan vertikal) pada grafik *monitoring*.
