@@ -15,3 +15,14 @@ Dalam arsitektur *event-driven*, agar komunikasi asinkronus dapat terjadi, pengi
 Berikut adalah *screenshot* dari *dashboard* RabbitMQ Management yang sedang berjalan secara lokal (via Docker) dan diakses melalui `http://localhost:15672`:
 
 ![img.png](img1.png)
+
+### Hasil Eksekusi Publisher-Subscriber
+
+![img.png](img.png)
+
+**Apa yang terjadi pada konsol tersebut?**
+Pada eksperimen ini, arsitektur *event-driven* berhasil dijalankan menggunakan **Publisher** dan **Subscriber** yang beroperasi secara bersamaan.
+
+1. Konsol **Subscriber** dijalankan lebih dulu dan berada dalam mode *listening*, bertindak sebagai *consumer* yang *standby* menunggu pesan masuk dari *message broker* AMQP.
+2. Konsol **Publisher** kemudian dieksekusi, di mana program ini berhasil mengirimkan (*dispatch*) 5 *event* (pesan) secara berurutan ke *message broker*.
+3. Seperti yang terlihat pada *screenshot*, sesaat setelah Publisher mengirimkan rentetan *event* tersebut, Subscriber langsung menangkap dan memproses pesan-pesannya secara *real-time*.
